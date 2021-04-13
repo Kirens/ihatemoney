@@ -4,7 +4,7 @@ import json
 import re
 from time import sleep
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -1547,12 +1547,13 @@ class BudgetTestCase(IhatemoneyTestCase):
         ]
 
         assert converted == [
-            (10.0, 'CAD', 10.0),
-            (13.0, 'EUR', 19.5),
-            (13.33, 'USD', 16.0),
-            (20.0, 'USD', 24.0),
-            (10.0, 'USD', 12.0), 
+            (10.0, "CAD", 10.0),
+            (13.0, "EUR", 19.5),
+            (13.33, "USD", 16.0),
+            (20.0, "USD", 24.0),
+            (10.0, "USD", 12.0),
         ]
+
 
 if __name__ == "__main__":
     unittest.main()
