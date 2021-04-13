@@ -82,7 +82,7 @@ def get_history(project, human_readable_names=True):
                 object_str = describe_version(version)
 
             common_properties = {
-                "time": version.transaction.issued_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "time": version.transaction.issued_at,
                 "operation_type": version.operation_type,
                 "object_type": object_type,
                 "object_desc": object_str,
@@ -113,7 +113,7 @@ def get_history(project, human_readable_names=True):
                         ):
                             del changeset["converted_amount"]
 
-                    for (prop, (val_before, val_after),) in changeset.items():
+                    for (prop, (val_before, val_after)) in changeset.items():
                         if human_readable_names:
                             if prop == "payer_id":
                                 prop = "payer"

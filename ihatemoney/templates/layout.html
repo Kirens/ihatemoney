@@ -6,6 +6,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel=stylesheet type=text/css href="{{ url_for("static", filename='css/main.css') }}">
+    {% block css %}{% endblock %}
     <script src="{{ url_for("static", filename="js/jquery-3.1.1.min.js") }}"></script>
     <script src="{{ url_for("static", filename="js/ihatemoney.js") }}"></script>
     <script src="{{ url_for("static", filename="js/tether.min.js") }}"></script>
@@ -41,14 +42,12 @@
     <h1><a class="navbar-brand" href="{{ url_for("main.home") }}"><span>#!</span> money?</a></h1>
 
     <div class="collapse navbar-collapse" id="navbarToggler">
-      <ul class="navbar-nav ml-auto mr-auto">
+      <ul class="navbar-nav nav-fill w-100">
         {% if g.project %}
           {% block navbar %}
           <li class="nav-item{% if current_view == 'list_bills' %} active{% endif %}"><a class="nav-link" href="{{ url_for("main.list_bills") }}">{{ _("Bills") }}</a></li>
           <li class="nav-item{% if current_view == 'settle_bill' %} active{% endif %}"><a class="nav-link" href="{{ url_for("main.settle_bill") }}">{{ _("Settle") }}</a></li>
           <li class="nav-item{% if current_view == 'statistics' %} active{% endif %}"><a class="nav-link" href="{{ url_for("main.statistics") }}">{{ _("Statistics") }}</a></li>
-          <li class="nav-item{% if current_view == 'history' %} active{% endif %}"><a class="nav-link" href="{{ url_for("main.history") }}">{{ _("History") }}</a></li>
-          <li class="nav-item{% if current_view == 'edit_project' %} active{% endif %}"><a class="nav-link" href="{{ url_for("main.edit_project") }}">{{ _("Settings") }}</a></li>
           {% endblock %}
         {% endif %}
       </ul>
@@ -91,7 +90,10 @@
                 {{ _("Start a new project") }}
               </a>
             </li>
-
+            {% if g.project %}
+            <li><a class="dropdown-item" href="{{ url_for("main.history") }}">{{ _("History") }}</a></li>
+            <li><a class="dropdown-item" href="{{ url_for("main.edit_project") }}">{{ _("Settings") }}</a></li>
+            {% endif %}
 
             {% if session['projects'] and not ((session['projects'] | length) == 1 and g.project and session['projects'][0][0] == g.project.id) %}
             <li class="dropdown-divider"></li>
@@ -144,14 +146,14 @@
             <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="top" title="{{ _('Code') }}" href="https://github.com/spiral-project/ihatemoney">
               <i class="icon git">{{ static_include("images/git.svg") | safe }}</i>
             </a>
-            <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="top" title="{{ _('Mobile Application') }}" href="https://gitlab.com/eneiluj/moneybuster#moneybuster-for-android">
+            <a data-toggle="tooltip" data-placement="top" title="{{ _('Mobile Application') }}" href="{{url_for('main.mobile')}}">
               <i class="icon mobile">{{ static_include("images/mobile-alt.svg") | safe }}</i>
             </a>
             <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="top" title="{{ _('Documentation') }}" href="https://ihatemoney.readthedocs.io/en/latest/">
               <i class="icon book">{{ static_include("images/book.svg") | safe }}</i>
             </a>
             {% if g.show_admin_dashboard_link %}
-            <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="top" title="{{ _('Administation Dashboard') }}" href="{{ url_for("main.dashboard") }}">
+            <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="top" title="{{ _('Administation Dashboard') }}" href="{{ url_for('main.dashboard') }}">
               <i class="icon admin">{{ static_include("images/cog.svg") | safe }}</i>
             </a>
             {% endif %}

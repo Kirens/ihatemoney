@@ -46,11 +46,11 @@ test: install-dev ## Run the tests
 
 .PHONY: black
 black: install-dev ## Run the tests
-	$(VENV)/bin/black --target-version=py34 .
+	$(VENV)/bin/black --target-version=py36 .
 
 .PHONY: isort
 isort: install-dev ## Run the tests
-	$(VENV)/bin/isort -rc .
+	$(VENV)/bin/isort .
 
 .PHONY: release
 release: install-dev ## Release a new version (see https://ihatemoney.readthedocs.io/en/latest/contributing.html#how-to-release)
